@@ -1,0 +1,5 @@
+# to ignore all .csv files
+*.csv
+
+# to ignore a folder
+test/
