@@ -1,0 +1,145 @@
+# Basic Daily Commands of Git:::
+
+# create project directory
+mkdir project_name     --> mkdir git_test
+cd project_name		   --> cd git_test
+
+# to add username and email id 
+git config --global user.name "gaurav.sisodia"
+git config --global user.email "gaurav4291@gmail.com"
+
+# to make a project as a git repo
+git init or
+git clone https://github.com/GauravSisodia/Git_Tutorial_GreyAtom.git  (importing a repositories present in github to local system)
+
+# create .gitignore file to ignore the files or folder which we don't want to upload on Github or any personal git repository
+vim .gitignore
+	- try *.csv or test/ in .gitignore and save it 
+	- we can also ignore a specific folder : let say test folder from parent test directory: test/test/ or any other specific folder
+
+
+# to check the status of a project and the brach name 
+git status
+
+# to add a file or all files in a github
+git add filename or git add .(for adding all files)
+
+# to remove a file or all files in a github
+git rm --cached filename or git rm --cached .(for adding all files)
+
+# to commit a change or changes with a message
+git commit -m "message"
+
+## Note : till now we have a local repository so now we also have to create a remote repo in github with a same name as project_name (git_test)
+
+## After creating a new repo in Github we can add this to our project using http url or ssh keys
+	- to generate ssh key:  ssh-keygen -t rsa (when prompted, enter password, key name can stay the same)
+	- key can be found in cat ~/.ssh/id_rsa.pub
+	- copy the ssh key in github 
+
+# add a remote repo to local repo using a http url
+git remote add origin https://github.com/GauravSisodia/git_test.git
+
+# add a remote upstream to push the code to remote Github :: this has to be done only once when we create a new repo or project
+git push --set-upstream origin master
+
+# Push the code to Github repo : master branch
+git push origin master
+
+## Note: In a production or real world projects --> master branch is the most stable branch in which each and every developer should merge their final code --> each developer works on their branch : let say update_test branch and then merge the changes with master branch
+
+# To check list of branches in your project 
+git branch
+
+# To create a new branch 
+git checkout -b name_of_the_branch   --> git checkout -b update_test  --> this will create and automatically switch to new branch update_test
+OR
+git branch name_of_the_branch        --> git branch update_test
+
+# To switch to a new branch
+git checkout update_test
+	-> for test: make some changes in .gitignore file or in some code file
+	-> git status
+	-> git add .
+	-> git commit -m "message"
+	-> git push : this will pop up for adding upstream to update_test branch
+	-> git push --set-upstream origin update_test
+	-> check on github.com : code will gets added to update_test branch , not master branch 
+	-> to merge the code to master branch : 
+		-> click on compare and pull request --> this will create a pull request and compare the changes with the master branch
+		-> now , click on Create a pull request --> If we get conficts error then some has made changes to master branch 
+		-> now , reviewer will review the pull request and then merge ur branch code with master code if everything looks fine to him.
+		-> check the code in master branch
+
+
+# To get the details or list of commit you have done so far 
+git log
+git log --pretty=oneline               --> this prints the commits as one liner
+
+# To pull the changes made in master branch 
+git checkout master		--> first we need to switch to master branch to pull changes from master branch of github.com
+git pull     			--> this will pull the changed code from master branch to ur local system 
+
+git fetch   			--> these are other commands --> learn about them
+git merge 
+
+# To handle the conflicts between different branches
+	-> git checkout -b "test1"
+	-> vim test.py              --> remove one line of code
+	-> git status
+	-> git add .
+	-> git commit -m "removed one line"
+	-> git push origin test1
+	-> git checkout master
+	-> git pull 			   --> to pull latest code
+	-> git checkout -b "test2"
+	-> vim test.py              --> make some change in codee
+	-> git status
+	-> git add .
+	-> git commit -m "changes made in code"
+	-> git push origin test2
+	-> Now , Go to github.com 
+	-> Create --> compare and pull request for the branches  by clicking on them one by one
+	-> merge the first branch : test1 
+	-> now try to merge the second branch : test2
+	-> we get a branch conflict error
+	-> To resolve this :
+		-> Come to terminal and switch to master branch --> git checkout master
+		-> git pull
+		-> git checkout test2
+		-> git merge master						--> this will throw a merge conflict error
+		-> vim test.py or open in VSCode		--> this will tell u what are current change in test2 and what are changes in master branch
+		-> keep the current changes 			--> easy to do in VSCode
+		-> git add .
+		-> git commit
+		-> git push origin test2
+		-> Go to github.com and then merge the file and check the changes in master file 
+
+# To handle other conflicts
+-> git checkout -b "test3"
+-> vim test.py 					--> here I hv forgot to pull remote master branch changes so those change will not get reflected now
+-> git checkout master
+-> git pull
+-> vim test.py 					--> now changes will be seen
+-> git checkout test3
+-> git merge master				--> to merge changes from local master to test3 branch
+-> vim test.py 					--> now changes will also be seen under test3 branch
+-> now make changes in test.py under test3 branch
+-> git add .
+-> git commit -m "added a new line"
+-> git push origin test3
+-> merge the changes to master branch on github.com
+-> now switch to master branch : git checkout master
+-> make changes in test.py under master local branch
+-> git add .
+-> git commit -m "Added a second new line"
+-> git push 		--> This will give an error becoz we have not pulled remote master changes so it tells to pull first n then push changes.
+-> git pull 		--> I will hv conflicts again
+-> vim test.py 		--> This will show the current and master changes
+-> keep both the changes using VSCode
+-> git add .
+-> git commit
+-> git push
+-> Check the changes on github.com
+
+## Note : So it good to pull the changes from remote branch whenever you start to make any change in ur project while working on a personal project or in real world company project.
