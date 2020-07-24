@@ -2,4 +2,4 @@
 *.csv
 
 # to ignore a folder
-test/
+test/test/
