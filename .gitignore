@@ -3,3 +3,6 @@
 
 # to ignore a folder
 test/test/
+
+# to ignore a zip file
+*.zip
