@@ -143,10 +143,10 @@ git merge
 -> Check the changes on github.com
 
 
-// delete branch locally
+# delete branch locally
 git branch -d localBranchName
 
-// delete branch remotely
+# delete branch remotely
 git push origin --delete remoteBranchName
 
 ## Note : So it good to pull the changes from remote branch whenever you start to make any change in ur project while working on a personal project or in real world company project.
